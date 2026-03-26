@@ -1,0 +1,43 @@
+//LOP NGUOI DUNG
+class NguoiDung {
+protected:
+    string username;
+    string password;
+
+public:
+    NguoiDung(string username = "", string password = "") {
+        this->username = username;
+        this->password = password;
+    }
+
+    virtual ~NguoiDung() {}
+
+    string getUsername() { return this->username; }
+    string getPassword() { return this->password; }
+
+    void setPassword(string password) {
+        this->password = password;
+    }
+};
+//MAY
+class May {
+private:
+    int id;
+    bool trangThai;
+
+public:
+    May(int id = 0) {
+        this->id = id;
+        this->trangThai = false;
+    }
+
+    void batMay() {
+        this->trangThai = true;
+        cout << "May " << this->id << " DA BAT\n";
+    }
+
+    void tatMay() {
+        this->trangThai = false;
+        cout << "May " << this->id << " DA TAT\n";
+    }
+};
