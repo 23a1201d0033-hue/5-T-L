@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-// ===== HÀM NHẬP LỰA CHỌN =====
+//HÀM NHẬP LỰA CHỌN
 int nhapLuaChon(int min, int max) {
     int chon;
     while (true) {
@@ -23,7 +23,7 @@ int nhapLuaChon(int min, int max) {
     }
 }
 
-// ================== LỚP CƠ SỞ ==================
+//LỚP NGƯỜI DÙNG
 class NguoiDung {
 protected:
     string username;
@@ -45,7 +45,7 @@ public:
     }
 };
 
-// ================== TÀI KHOẢN ==================
+//TÀI KHOẢN
 class TaiKhoan : public NguoiDung {
 private:
     double soTien;
@@ -111,7 +111,7 @@ public:
     }
 };
 
-// ================== DỊCH VỤ ==================
+//DỊCH VỤ 
 class DichVu {
 private:
     string ten;
@@ -127,7 +127,7 @@ public:
     double getGia() { return this->gia; }
 };
 
-// ================== MÁY ==================
+//MÁY 
 class May {
 private:
     int id;
@@ -150,7 +150,7 @@ public:
     }
 };
 
-// ================== SERVER ==================
+//SERVER
 class Server {
 private:
     vector<TaiKhoan*> dsTK;
@@ -166,14 +166,14 @@ public:
         dsDV.push_back(DichVu("Nuoc ngot", 5000));
     }
 
-    // 🔥 Destructor giải phóng bộ nhớ
+    //
     ~Server() {
         for (int i = 0; i < dsTK.size(); i++) {
             delete dsTK[i];
         }
     }
 
-    // ===== TẠO TK =====
+    //TẠO TK
     void taoTK() {
         string u, p;
         cout << "Nhap username: ";
@@ -185,7 +185,7 @@ public:
         cout << "Tao thanh cong!\n";
     }
 
-    // ===== ĐĂNG NHẬP =====
+    //ĐĂNG NHẬP
     int dangNhap() {
         string u, p;
 
@@ -228,7 +228,7 @@ public:
         return -1;
     }
 
-    // ===== DỊCH VỤ =====
+    //DỊCH VỤ
     void suDungDV(int idx) {
         cout << "\n=== DICH VU ===\n";
         for (int i = 0; i < dsDV.size(); i++) {
@@ -247,7 +247,7 @@ public:
         }
     }
 
-    // ===== KHÓA TK =====
+    //KHÓA TK
     void khoaTK() {
         string u;
         cout << "Nhap username can khoa: ";
@@ -263,7 +263,7 @@ public:
         cout << "Khong tim thay!\n";
     }
 
-    // ===== MÁY =====
+    //MÁY
     void quanLyMay() {
         cout << "1. Bat may\n2. Tat may\n";
         int chon = nhapLuaChon(1, 2);
@@ -280,7 +280,7 @@ public:
         }
     }
 
-    // ===== MENU USER =====
+    //MENU USER
     void menuUser(int idx) {
         int chon;
         do {
@@ -303,7 +303,7 @@ public:
         } while (chon != 0);
     }
 
-    // ===== MENU CHÍNH =====
+    //MENU CHÍNH
     void menu() {
         int chon;
         do {
@@ -332,7 +332,7 @@ public:
     }
 };
 
-// ======== MAIN ============
+//MAIN
 int main() {
     Server s;
     s.menu();
