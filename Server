@@ -1,0 +1,180 @@
+class Server {
+private:
+    vector<TaiKhoan*> dsTK;
+    vector<DichVu> dsDV;
+    vector<May> dsMay;
+
+public:
+    Server() {
+        for (int i = 1; i <= 5; i++)
+            dsMay.push_back(May(i));
+
+        dsDV.push_back(DichVu("Mi tom", 10000));
+        dsDV.push_back(DichVu("Nuoc ngot", 5000));
+    }
+
+    // 🔥 Destructor giải phóng bộ nhớ
+    ~Server() {
+        for (int i = 0; i < dsTK.size(); i++) {
+            delete dsTK[i];
+        }
+    }
+
+    // ===== TẠO TK =====
+    void taoTK() {
+        string u, p;
+        cout << "Nhap username: ";
+        cin >> u;
+        cout << "Nhap password: ";
+        cin >> p;
+
+        dsTK.push_back(new TaiKhoan(u, p));
+        cout << "Tao thanh cong!\n";
+    }
+
+    // ===== ĐĂNG NHẬP =====
+    int dangNhap() {
+        string u, p;
+
+        cout << "Username: ";
+        cin >> u;
+
+        int index = -1;
+
+        for (int i = 0; i < dsTK.size(); i++) {
+            if (dsTK[i]->getUsername() == u) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index == -1) {
+            cout << "Tai khoan khong ton tai!\n";
+            return -1;
+        }
+
+        if (dsTK[index]->getTrangThaiKhoa()) {
+            cout << "Tai khoan da bi khoa!\n";
+            return -1;
+        }
+
+        for (int lan = 1; lan <= 3; lan++) {
+            cout << "Nhap password (" << lan << "/3): ";
+            cin >> p;
+
+            if (p == dsTK[index]->getPassword()) {
+                cout << "Dang nhap thanh cong!\n";
+                return index;
+            }
+
+            cout << "Sai mat khau!\n";
+        }
+
+        dsTK[index]->khoaTaiKhoan();
+        cout << "Tai khoan bi khoa!\n";
+        return -1;
+    }
+
+    // ===== DỊCH VỤ =====
+    void suDungDV(int idx) {
+        cout << "\n=== DICH VU ===\n";
+        for (int i = 0; i < dsDV.size(); i++) {
+            cout << i + 1 << ". " << dsDV[i].getTen()
+                 << " - " << dsDV[i].getGia() << endl;
+        }
+
+        int chon = nhapLuaChon(1, dsDV.size());
+        double gia = dsDV[chon - 1].getGia();
+
+        if (dsTK[idx]->getSoTien() >= gia) {
+            dsTK[idx]->setSoTien(dsTK[idx]->getSoTien() - gia);
+            cout << "Da mua " << dsDV[chon - 1].getTen() << endl;
+        } else {
+            cout << "Khong du tien!\n";
+        }
+    }
+
+    // ===== KHÓA TK =====
+    void khoaTK() {
+        string u;
+        cout << "Nhap username can khoa: ";
+        cin >> u;
+
+        for (int i = 0; i < dsTK.size(); i++) {
+            if (dsTK[i]->getUsername() == u) {
+                dsTK[i]->khoaTaiKhoan();
+                return;
+            }
+        }
+
+        cout << "Khong tim thay!\n";
+    }
+
+    // ===== MÁY =====
+    void quanLyMay() {
+        cout << "1. Bat may\n2. Tat may\n";
+        int chon = nhapLuaChon(1, 2);
+
+        cout << "Nhap ID may: ";
+        int id;
+        cin >> id;
+
+        if (id >= 1 && id <= dsMay.size()) {
+            if (chon == 1)
+                dsMay[id - 1].batMay();
+            else
+                dsMay[id - 1].tatMay();
+        }
+    }
+
+    // ===== MENU USER =====
+    void menuUser(int idx) {
+        int chon;
+        do {
+            cout << "\n=== MENU USER ===\n";
+            cout << "1. Nap tien\n";
+            cout << "2. Dich vu\n";
+            cout << "3. Doi mat khau\n";
+            cout << "4. Xem thong tin\n";
+            cout << "0. Dang xuat\n";
+
+            chon = nhapLuaChon(0, 4);
+
+            switch (chon) {
+                case 1: dsTK[idx]->napTien(); break;
+                case 2: suDungDV(idx); break;
+                case 3: dsTK[idx]->doiMatKhau(); break;
+                case 4: dsTK[idx]->hienThi(); break;
+            }
+
+        } while (chon != 0);
+    }
+
+    // ===== MENU CHÍNH =====
+    void menu() {
+        int chon;
+        do {
+            cout << "\n===== QUAN NET =====\n";
+            cout << "1. Tao tai khoan\n";
+            cout << "2. Dang nhap\n";
+            cout << "3. Quan ly may\n";
+            cout << "4. Khoa tai khoan\n";
+            cout << "0. Thoat\n";
+
+            chon = nhapLuaChon(0, 4);
+
+            switch (chon) {
+                case 1: taoTK(); break;
+                case 2: {
+                    int idx = dangNhap();
+                    if (idx != -1)
+                        menuUser(idx);
+                    break;
+                }
+                case 3: quanLyMay(); break;
+                case 4: khoaTK(); break;
+            }
+
+        } while (chon != 0);
+    }
+};
