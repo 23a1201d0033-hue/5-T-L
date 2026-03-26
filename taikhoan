@@ -1,3 +1,4 @@
+//TÀI KHOẢN
 class TaiKhoan : public NguoiDung {
 private:
     double soTien;
@@ -61,20 +62,4 @@ public:
              << " | Tien: " << this->soTien
              << " | Gio: " << this->gioChoi << endl;
     }
-};
-
-// ================== DỊCH VỤ ==================
-class DichVu {
-private:
-    string ten;
-    double gia;
-
-public:
-    DichVu(string ten = "", double gia = 0) {
-        this->ten = ten;
-        this->gia = gia;
-    }
-
-    string getTen() { return this->ten; }
-    double getGia() { return this->gia; }
 };
