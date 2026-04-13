@@ -65,10 +65,12 @@ public:
 
     ~TaiKhoan() {}
 
-    // ---> NÂNG CẤP 2: GHI ĐÈ HÀM THUẦN ẢO (TÍNH ĐA HÌNH)
-    void hienThiVaiTro() override {
-        cout << "[KHACH HANG] - " << this->username;
-    }
+     void hienThiVaiTro() override {
+        // C?p nh?t thêm soTien và gioChoi vào l?nh cout
+        cout << "[KHACH HANG] - " << this->username 
+             << " | Tien: " << this->soTien 
+             << " | Gio: " << this->gioChoi;
+}
 
     double getSoTien() { return this->soTien; }
     void setSoTien(double soTien) {
@@ -113,7 +115,7 @@ public:
         cout << "Tai khoan " << this->username << " da bi khoa!\n";
     }
 
-    // ---> NÂNG CẤP 3: HÀM FRIEND THAY THẾ CHO HÀM hienThi() cũ
+    // ---> NÂNG CẤP 3: HÀM FRIEND THAY THẾ CHO HÀM hienThi() CŨ
     friend ostream& operator<<(ostream& os, const TaiKhoan& tk);
 };
 
@@ -125,7 +127,7 @@ ostream& operator<<(ostream& os, const TaiKhoan& tk) {
     return os;
 }
 
-// ---> NÂNG CẤP 4: LỚP ADMIN MỚI 
+// ---> NÂNG CẤP 4: LỚP ADMIN MỚI ĐỂ THỂ HIỆN RÕ ĐA HÌNH
 class Admin : public NguoiDung {
 public:
     Admin(string u = "", string p = "") : NguoiDung(u, p) {}
@@ -189,8 +191,6 @@ public:
 
         dsDV.push_back(DichVu("Mi tom", 10000));
         dsDV.push_back(DichVu("Nuoc ngot", 5000));
-       dsDV.push_back(DichVu("Nuoc loc", 3000));
-         dsDV.push_back(DichVu("Com rang", 12000));
 
         // Khởi tạo sẵn một tài khoản Admin ẩn để test Đa hình
         dsND.push_back(new Admin("admin", "123"));
@@ -366,7 +366,7 @@ public:
             cout << "2. Dang nhap\n";
             cout << "3. Quan ly may\n";
             cout << "4. Khoa tai khoan\n";
-            cout << "5. Xem danh sach Nguoi dung ()\n";
+            cout << "5. Xem danh sach Nguoi dung (Test Da Hinh)\n";
             cout << "0. Thoat\n";
 
             chon = nhapLuaChon(0, 5);
